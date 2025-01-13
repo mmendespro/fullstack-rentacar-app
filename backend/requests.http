@@ -1,0 +1,36 @@
+POST http://localhost:8080/api/rentals
+Content-Type: application/json
+
+{
+  "carId": "c8074995-3ca9-4b47-b888-182a585147b7",
+  "customerId": "388d56c3-6238-4823-b8c7-70917022776c",
+  "startDate": "2025-01-02T16:21:20.964Z",
+  "expectedReturnDate": "2025-01-04T16:21:20.964Z"
+}
+
+###
+POST http://localhost:8080/api/rentals
+Content-Type: application/json
+
+{
+  "carId": "c8074995-3ca9-4b47-b888-182a585147b7",
+  "customerId": "f421c190-11f6-431d-a7cc-2ab4f8652072",
+  "startDate": "2025-01-02T16:21:20.964Z",
+  "expectedReturnDate": "2025-01-04T16:21:20.964Z"
+}
+
+###
+POST http://localhost:8080/api/rentals/return
+Content-Type: application/json
+
+{
+  "rentalId": "375eb0dc-d8ff-4682-9778-c79f49fd9ad8",
+  "actualReturnDate": "2025-01-05T16:26:59.276Z",
+  "pointsToUse": 0
+}
+
+###
+GET http://localhost:8080/api/rentals
+
+###
+GET http://localhost:8080/api/customers

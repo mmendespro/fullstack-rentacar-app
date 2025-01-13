@@ -1,0 +1,340 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Rent a Car API",
+    "version": "1.0.0",
+    "description": "API para gerenciamento de aluguéis de veículos",
+    "contact": {
+      "email": "suporte@rentacar.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Servidor de desenvolvimento"
+    }
+  ],
+  "tags": [
+    {
+      "name": "rentals",
+      "description": "Operações relacionadas a aluguéis de veículos"
+    },
+    {
+      "name": "customers",
+      "description": "Operações relacionadas a clientes"
+    }
+  ],
+  "paths": {
+    "/api/rentals": {
+      "get": {
+        "tags": [
+          "rentals"
+        ],
+        "summary": "List all active car rentals",
+        "responses": {
+          "200": {
+            "description": "List of active rentals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RentalOutput"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "rentals"
+        ],
+        "summary": "Creates a new car rental for a customer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRentalInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Rental created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRentalOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "404": {
+            "description": "Car or customer not found"
+          }
+        }
+      }
+    },
+    "/api/rentals/return": {
+      "post": {
+        "tags": [
+          "rentals"
+        ],
+        "summary": "Processes the return of a rented car",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReturnRentalInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Rental returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReturnRentalOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "404": {
+            "description": "Rental not found"
+          }
+        }
+      }
+    },
+    "/api/customers": {
+      "get": {
+        "tags": [
+          "customers"
+        ],
+        "summary": "List all customers",
+        "responses": {
+          "200": {
+            "description": "List of customers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerOutput"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "customers"
+        ],
+        "summary": "Creates a new customer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Customer created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCustomerOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "CreateRentalInput": {
+        "type": "object",
+        "properties": {
+          "carId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expectedReturnDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "carId",
+          "customerId",
+          "startDate",
+          "expectedReturnDate"
+        ]
+      },
+      "CreateRentalOutput": {
+        "type": "object",
+        "properties": {
+          "rentalId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "ReturnRentalInput": {
+        "type": "object",
+        "properties": {
+          "rentalId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "actualReturnDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pointsToUse": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "rentalId",
+          "actualReturnDate"
+        ]
+      },
+      "ReturnRentalOutput": {
+        "type": "object",
+        "properties": {
+          "finalPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "pointsEarned": {
+            "type": "integer"
+          }
+        }
+      },
+      "CreateCustomerInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "document": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "document"
+        ]
+      },
+      "CreateCustomerOutput": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "CustomerOutput": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "document": {
+            "type": "string"
+          }
+        }
+      },
+      "RentalOutput": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "carId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expectedReturnDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "COMPLETED",
+              "CANCELED"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
