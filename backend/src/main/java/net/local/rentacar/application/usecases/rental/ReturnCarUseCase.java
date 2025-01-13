@@ -13,7 +13,6 @@ import net.local.rentacar.domain.repositories.CarRepository;
 import net.local.rentacar.domain.repositories.CustomerRepository;
 import net.local.rentacar.domain.repositories.RentalRepository;
 import net.local.rentacar.domain.strategy.PriceCalculationFactory;
-import net.local.rentacar.domain.vo.CarStatus;
 
 @Service
 public class ReturnCarUseCase implements UseCase<ReturnRentalInput,ReturnRentalOutput>{
@@ -52,7 +51,7 @@ public class ReturnCarUseCase implements UseCase<ReturnRentalInput,ReturnRentalO
         customerRepository.save(rental.getCustomer());
 
         // Salva modificações no Car devido alterações no status
-        carRepository.save(rental.getCar().changeStatus(CarStatus.AVAILABLE));
+        carRepository.save(rental.getCar().markAsAvailable());
         
         return new ReturnRentalOutput(rental.getId(), rental.getFinalPrice(), rental.getActualReturnDate());
     }

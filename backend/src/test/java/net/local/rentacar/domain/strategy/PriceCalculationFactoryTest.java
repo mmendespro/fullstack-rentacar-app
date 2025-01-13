@@ -60,6 +60,6 @@ class PriceCalculationFactoryTest {
             priceCalculationFactory.calculate("INVALID", rental);
         });
         
-        assertEquals("No creator found for record type: INVALID", exception.getMessage());
+        assertEquals("No calculator found for category: INVALID", exception.getMessage());
     }
 }

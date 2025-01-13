@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,11 +37,11 @@ class ListActiveRentalUseCaseTest {
     @Test
     void whenListActiveRentals_thenShouldReturnListOfActiveRentals() {
         // Arrange
-        Car car1 = new Car("ABC-1234", CarStatus.RENTED, CarCategory.ECONOMY);
+        Car car1 = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.RENTED, CarCategory.ECONOMY);
         Customer customer1 = new Customer("John Doe", "123.456.789-00");
         Rental rental1 = new Rental(car1, customer1, LocalDateTime.now(), LocalDateTime.now().plusDays(3), new BigDecimal("300.00"));
         
-        Car car2 = new Car("XYZ-9876", CarStatus.RENTED, CarCategory.LUXURY);
+        Car car2 = Car.of(UUID.randomUUID(),"XYZ-9876", CarStatus.RENTED, CarCategory.LUXURY);
         Customer customer2 = new Customer("Jane Doe", "987.654.321-00");
         Rental rental2 = new Rental(car2, customer2, LocalDateTime.now(), LocalDateTime.now().plusDays(5), new BigDecimal("500.00"));
         

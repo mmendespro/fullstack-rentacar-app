@@ -12,10 +12,10 @@ public class Car {
     private CarStatus status;
     private CarCategory category;
     
-    public Car(String plate, CarStatus status, CarCategory category) {
+    public Car(String plate, CarCategory category) {
         this.id = UUID.randomUUID();
         this.plate = plate;
-        this.status = status;
+        this.status = CarStatus.AVAILABLE;
         this.category = category;
     }
 
@@ -42,8 +42,12 @@ public class Car {
         return category;
     }
 
-    public Car changeStatus(CarStatus newStatus) {
-        return new Car(id, plate, newStatus, category);
+    public Car rent() {
+        return new Car(id, plate, CarStatus.RENTED, category);
+    }
+
+    public Car markAsAvailable() {
+        return new Car(id, plate, CarStatus.AVAILABLE, category);
     }
 
     public static Car of(UUID id, String plate, CarStatus status, CarCategory category) {

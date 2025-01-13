@@ -65,7 +65,7 @@ class ReturnCarUseCaseTest {
         LocalDateTime actualReturnDate = LocalDateTime.now();
         int pointsToUse = 0;
         
-        Car car = new Car("ABC-1234", CarStatus.RENTED, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.RENTED, CarCategory.ECONOMY);
         Customer customer = new Customer("John Doe", "123.456.789-00");
         Rental rental = new Rental(car, customer, LocalDateTime.now(), LocalDateTime.now().plusDays(3), new BigDecimal("300.00"));
         

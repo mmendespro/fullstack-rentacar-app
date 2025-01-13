@@ -12,12 +12,13 @@ class CarTest {
     @Test
     void whenCreateCar_thenShouldInitializeWithCorrectValues() {
         // Arrange
+        UUID id = UUID.randomUUID();
         String plate = "ABC-1234";
         CarStatus status = CarStatus.AVAILABLE;
         CarCategory category = CarCategory.ECONOMY;
         
         // Act
-        Car car = new Car(plate, status, category);
+        Car car = Car.of(id, plate, status, category);
         
         // Assert
         assertNotNull(car.getId());
@@ -29,10 +30,10 @@ class CarTest {
     @Test
     void whenChangeStatus_thenShouldReturnNewCarWithUpdatedStatus() {
         // Arrange
-        Car car = new Car("ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
         
         // Act
-        Car updatedCar = car.changeStatus(CarStatus.RENTED);
+        Car updatedCar = car.rent();
         
         // Assert
         assertEquals(CarStatus.RENTED, updatedCar.getStatus());

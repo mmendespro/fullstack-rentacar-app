@@ -62,7 +62,7 @@ class CreateRentalUseCaseTest {
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime expectedReturnDate = startDate.plusDays(3);
         
-        Car car = new Car("ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
         Customer customer = new Customer("John Doe", "123.456.789-00");
         
         when(carRepository.findById(carId)).thenReturn(Optional.of(car));
@@ -104,7 +104,7 @@ class CreateRentalUseCaseTest {
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime expectedReturnDate = startDate.plusDays(3);
         
-        Car car = new Car("ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
         
         when(carRepository.findById(carId)).thenReturn(Optional.of(car));
         when(customerRepository.findById(customerId)).thenReturn(Optional.empty());
@@ -125,7 +125,7 @@ class CreateRentalUseCaseTest {
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime expectedReturnDate = startDate.plusDays(3);
         
-        Car car = new Car("ABC-1234", CarStatus.RENTED, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.RENTED, CarCategory.ECONOMY);
         
         when(carRepository.findById(carId)).thenReturn(Optional.of(car));
         

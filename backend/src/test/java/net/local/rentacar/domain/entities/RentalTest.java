@@ -15,7 +15,7 @@ class RentalTest {
     @Test
     void whenCreateRental_thenShouldInitializeWithCorrectValues() {
         // Arrange
-        Car car = new Car("ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(), "ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
         Customer customer = new Customer("John Doe", "123.456.789-00");
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime expectedReturnDate = startDate.plusDays(3);
@@ -38,7 +38,7 @@ class RentalTest {
     @Test
     void whenReturnRental_thenShouldUpdateStatusAndReturnDate() {
         // Arrange
-        Car car = new Car("ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
         Customer customer = new Customer("John Doe", "123.456.789-00");
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime expectedReturnDate = startDate.plusDays(3);
@@ -58,7 +58,7 @@ class RentalTest {
     @Test
     void whenCreateRentalWithInvalidDates_thenShouldThrowException() {
         // Arrange
-        Car car = new Car("ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
         Customer customer = new Customer("John Doe", "123.456.789-00");
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime invalidReturnDate = startDate.minusDays(1);
@@ -74,7 +74,7 @@ class RentalTest {
     void whenCreateRentalWithStaticFactoryMethod_thenShouldCreateRentalWithGivenId() {
         // Arrange
         UUID expectedId = UUID.randomUUID();
-        Car car = new Car("ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
         Customer customer = new Customer("John Doe", "123.456.789-00");
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime expectedReturnDate = startDate.plusDays(3);
@@ -113,7 +113,7 @@ class RentalTest {
     @Test
     void whenApplyLoyaltyDiscount_thenShouldUpdateDiscountAndCustomerPoints() {
         // Arrange
-        Car car = new Car("ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
         Customer customer = new Customer("John Doe", "123.456.789-00");
         customer.addLoyaltyPoints(500);
         LocalDateTime startDate = LocalDateTime.now();
@@ -134,7 +134,7 @@ class RentalTest {
     @Test
     void whenCalculateAndAddLoyaltyPoints_thenShouldUpdateEarnedPoints() {
         // Arrange
-        Car car = new Car("ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
+        Car car = Car.of(UUID.randomUUID(),"ABC-1234", CarStatus.AVAILABLE, CarCategory.ECONOMY);
         Customer customer = new Customer("John Doe", "123.456.789-00");
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime expectedReturnDate = startDate.plusDays(3);

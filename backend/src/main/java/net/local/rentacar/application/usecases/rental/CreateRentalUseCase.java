@@ -51,7 +51,7 @@ public class CreateRentalUseCase implements UseCase<CreateRentalInput,CreateRent
 
         BigDecimal basePrice = calculateBasePrice(car, input.startDate(), input.expectedReturnDate());
         
-        Rental rental = new Rental(car.changeStatus(CarStatus.RENTED), customer, input.startDate(), input.expectedReturnDate(), basePrice);
+        Rental rental = new Rental(car.rent(), customer, input.startDate(), input.expectedReturnDate(), basePrice);
         rentalRepository.save(rental);
         carRepository.save(rental.getCar());
 
